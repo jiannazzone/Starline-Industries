@@ -40,6 +40,7 @@ var asteroid;
 //var asteroidIcon; //for the button
 var pirate;
 //var pirateIcon; //for the button
+var reset;
 
 //scaling and decorations
 var padding = 10;
@@ -58,6 +59,7 @@ function preload() {
   logo = loadImage('assets/logo_small.png');
   asteroidIcon = loadImage('assets/asteroid-icon.png');
   pirateIcon = loadImage('assets/pirate-icon.png');
+  reset = loadImage('assets/reset.png');
   loadGoalCards();
   loadSystemCards();
 }
@@ -144,6 +146,12 @@ function decorate() {
       cardX[0] - cardLong / 2, cardY[i] - cardShort / 2,
       cardLong, cardShort);
   }
+  //reset button
+  fill(242);
+  square(width - (5/2)*padding, height - (5/2)*padding,
+         5*padding, padding);
+  image(reset, width - 4.75*padding, height - 4.75*padding,
+        4.5*padding, 4.5*padding);
 }
 
 function setup() {
@@ -241,6 +249,27 @@ function mousePressed() {
       }
       updateCardNum(2, thisDeck3.length);
     }
+  }
+  
+  //reset game
+  if (mouseX > width - 5*padding &&
+      mouseY > height - 5*padding) {
+    
+    //reset booleans
+    deck1Status = false;
+    deck2Status = false;
+    deck3Status = false;
+    readyToPlay = false;
+    
+    //reset decks and goals
+    deck1 = [];
+    deck2 = [];
+    deck3 = [];
+    thisDeck1 = [];
+    thisDeck2 = [];
+    thisDeck3 = [];
+    
+    setup();
   }
 
   /*

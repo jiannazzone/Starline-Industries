@@ -84,9 +84,9 @@ function loadGoalCards() {
 }
 function loadSystemCards() {
   // load system cards
-  systemBack = loadImage('assets/systems/_back.png');
-  asteroid = loadImage('assets/systems/_asteroid.png');
-  pirate = loadImage('assets/systems/_pirates.png');
+  systemBack = loadImage('assets/systems/back.png');
+  asteroid = loadImage('assets/systems/asteroid.png');
+  pirate = loadImage('assets/systems/pirates.png');
   allSystems = {
     'AO': loadImage('assets/systems/AO.png'),
     'AR': loadImage('assets/systems/AR.png'),

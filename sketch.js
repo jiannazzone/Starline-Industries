@@ -160,15 +160,16 @@ function setup() {
   textAlign(CENTER, CENTER);
   noStroke();
   if (windowHeight < windowWidth) {
-    createCanvas(windowHeight, windowHeight);
+    cnv = createCanvas(windowHeight, windowHeight);
   } else {
-    createCanvas(windowWidth, windowWidth);
+    cnv = createCanvas(windowWidth, windowWidth);
   }
   scaling();
   decorate();
+  cnv.touchEnded(mouseClicked);
 }
 
-function mousePressed() {
+function mouseClicked() {
   // logic for making the decks at the start of the game
   if (!deck1Status &&
     mouseX < cardX[0] + cardLong / 2 && mouseX > cardX[0] - cardLong / 2 &&
@@ -272,6 +273,8 @@ function mousePressed() {
     
     setup();
   }
+  
+  return false;
 
   /*
   // logic for toggling pirates and asteroids on and off

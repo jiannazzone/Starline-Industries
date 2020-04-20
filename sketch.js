@@ -5,6 +5,7 @@ var allGoals = [
   [],
   []
 ];
+var allGoalsText = [];
 
 //stores goals for this game
 var goal1;
@@ -48,6 +49,7 @@ var cardY = [];
 var cardLong;
 var cardShort;
 var deckNumSize;
+var goalNumSize;
 //var buttonSize;
 //var buttonY;
 
@@ -59,7 +61,6 @@ function preload() {
   loadGoalCards();
   loadSystemCards();
 }
-
 function loadGoalCards() {
   // Load goal cards and backs. Backs are at index 0
   for (let i = 1; i < 4; i++) {
@@ -68,9 +69,19 @@ function loadGoalCards() {
     allGoals[2].push(loadImage('assets/goals/cards/2-' + i + '.png'));
     allGoals[3].push(loadImage('assets/goals/cards/3-' + i + '.png'));
   }
-
+  allGoalsText.push(
+    ['+1 starship multiplier',
+     '+1 free starship upgrade',
+     '+1 free starship upgrade']);
+  allGoalsText.push(
+    ['+1 credits from piracy',
+     '-1 upgrade cost for one good',
+     '-1 upgrade cost for two goods']);
+  allGoalsText.push(
+    ['+1 starship upgrade space',
+     '-1 upgrade cost for starship',
+     '+1 upgrade space on two goods']);
 }
-
 function loadSystemCards() {
   // load system cards
   systemBack = loadImage('assets/systems/_back.png');
@@ -99,6 +110,7 @@ function loadSystemCards() {
 }
 
 // set sizing of everything based on screen size
+//add decorations.
 function scaling() {
   cardShort = (height - 5 * padding) / 4.7;
   cardLong = 1.4 * cardShort;
@@ -111,10 +123,10 @@ function scaling() {
     y += padding + cardLong;
   }
   deckNumSize = cardLong / 6;
+  goalTextSize = deckNumSize/2;
   //buttonSize = height - cardY[2] - cardShort/2 - 2*padding;
   //buttonY = height/2 + cardY[2]/2 + cardShort/4 - padding/2;
 }
-//add decorations. also allows for resetting?
 function decorate() {
   //set up tabletop
   background(242);
@@ -136,6 +148,8 @@ function decorate() {
 
 function setup() {
   rectMode(CENTER);
+  textAlign(CENTER, CENTER);
+  noStroke();
   if (windowHeight < windowWidth) {
     createCanvas(windowHeight, windowHeight);
   } else {
@@ -185,7 +199,7 @@ function mousePressed() {
       } else {
         thisDeck1 = shuffleTheDeck(deck1);
         fill(15, 17, 30);
-        rect(cardX[2], cardY[0], cardShort, cardLong);
+        rect(cardX[2], cardY[0], cardShort+2, cardLong+2);
       }
       updateCardNum(0, thisDeck1.length);
     }
@@ -204,7 +218,7 @@ function mousePressed() {
       } else {
         thisDeck2 = shuffleTheDeck(deck2);
         fill(15, 17, 30);
-        rect(cardX[2], cardY[1], cardShort, cardLong);
+        rect(cardX[2], cardY[1], cardShort+2, cardLong+2);
       }
       updateCardNum(1, thisDeck2.length);
     }
@@ -223,7 +237,7 @@ function mousePressed() {
       } else {
         thisDeck3 = shuffleTheDeck(deck3);
         fill(15, 17, 30);
-        rect(cardX[2], cardY[2], cardShort, cardLong);
+        rect(cardX[2], cardY[2], cardShort+2, cardLong+2);
       }
       updateCardNum(2, thisDeck3.length);
     }
@@ -302,6 +316,11 @@ function makeDeck1() {
     deck1.push(allSystems.OP);
     deck1.push(allSystems.OP);
   }
+  fill(255);
+  textSize(goalTextSize);
+  textAlign(CENTER, CENTER);
+  text(allGoalsText[0][goal1],
+       cardX[0], cardY[0] + cardShort/2 + goalTextSize);
 }
 function makeDeck2() {
   deck2Status = true;
@@ -330,6 +349,11 @@ function makeDeck2() {
     deck2.push(allSystems.FP);
     deck2.push(allSystems.FP);
   }
+  fill(255);
+  textSize(goalTextSize);
+  textAlign(CENTER, CENTER);
+  text(allGoalsText[1][goal1],
+       cardX[0], cardY[1] + cardShort/2 + goalTextSize);
 }
 function makeDeck3() {
   deck3Status = true;
@@ -356,10 +380,11 @@ function makeDeck3() {
     deck3.push(allSystems.SY);
     deck3.push(allSystems.SD);
   }
-  //place a facedown system card to indicate readiness
-  image(systemBack,
-    cardX[1] - cardShort / 2, cardY[2] - cardLong / 2,
-    cardShort, cardLong);
+  fill(255);
+  textSize(goalTextSize);
+  textAlign(CENTER, CENTER);
+  text(allGoalsText[2][goal1],
+       cardX[0], cardY[2] + cardShort/2 + goalTextSize);
 }
 function makeEventDeck() {
   var eventDeck = [];
@@ -395,12 +420,10 @@ function shuffleTheDeck(x) {
   return shuffle(x);
 }
 function updateCardNum(whichDeck, num) {
-  noStroke();
   fill(51);
   square(cardX[1], cardY[whichDeck] + (cardLong - deckNumSize) / 2,
     deckNumSize, deckNumSize / 5);
   fill(245, 245, 237);
   textSize(0.9 * deckNumSize);
-  textAlign(CENTER, CENTER);
   text(num, cardX[1], cardY[whichDeck] + (cardLong - deckNumSize) / 2);
 }

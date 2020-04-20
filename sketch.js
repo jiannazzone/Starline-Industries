@@ -135,9 +135,10 @@ function decorate() {
   fill(15, 17, 30);
   rect(width / 2, height / 2,
     width - 2 * padding, height - 2 * padding, padding);
-  var logoHeight = cardShort / 2;
-  var logoWidth = 3.45 * logoHeight;
-  image(logo, cardX[0] - logoWidth / 2, padding,
+  var logoWidth = cardLong;
+  var logoHeight = logoWidth / 3.45;
+  image(logo, cardX[0] - logoWidth / 2,
+        cardY[0] - cardShort/2 - padding - logoHeight,
     logoWidth, logoHeight);
 
   //goal card backs
